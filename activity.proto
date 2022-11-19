@@ -1,0 +1,97 @@
+
+
+syntax = "proto3";
+
+package activity;
+
+option go_package="./services";
+
+import "google/protobuf/timestamp.proto";
+
+
+
+service activity {
+    rpc CreateActivity(ActivityForm) returns (Response){
+    option (google.api.http) = {
+      post: "/activity"
+      body: "*"
+    }
+  };
+    rpc GetActivitys(Empty) returns (ActivityList){
+    option (google.api.http) = {
+      get: "/activitys"
+    }
+  };
+    rpc GetActivity(ActivityId) returns (Activity){
+    option (google.api.http) = {
+      get: "/activity/{id}"
+    }
+  };
+    rpc EditActivity(ActivityEdit) returns (Response){
+    option (google.api.http) = {
+      put: "/activity/{id}"
+      body: "*"
+    }
+  };
+    rpc DeleteActivity(ActivityId) returns (Response){
+    option (google.api.http) = {
+      delete: "/activity/{id}"
+    }
+  };
+}
+
+message Empty {}
+
+message ActivityId {
+  string id = 1;
+}
+
+message ActivityForm {
+  string Name = 1;
+  string Description = 2;
+  repeated string ActivityType = 3;
+  string ImageProfile = 4;
+  string OwnerId = 5;
+  string Location = 6;
+  int64 MaxParticipant = 7;
+  string Date = 8;
+  float Duration = 9;
+}
+
+message Activity {
+  string ActivityId = 1;
+  string Name = 2;
+  string Description = 3;
+  repeated string ActivityType = 4;
+  string ImageProfile = 5;
+  string OwnerId = 6;
+  string Location = 7;
+  int64 MaxParticipant = 8;
+  string Participant = 9;
+  string Date = 10;
+  float Duration = 11;
+  string ChatId = 12;
+}
+
+message ActivityEdit {
+  string ActivityId = 1;
+  string Name = 2;
+  string Description = 3;
+  repeated string ActivityType = 4;
+  string ImageProfile = 5;
+  string OwnerId = 6;
+  string Location = 7;
+  int64 MaxParticipant = 8;
+  string Date = 9;
+  float Duration = 10;
+  string ChatId = 11;
+}
+
+message ActivityList{
+  repeated Activity data = 1;
+}
+
+message Response {
+  int64 Status = 1;
+  string Message = 2;
+}
